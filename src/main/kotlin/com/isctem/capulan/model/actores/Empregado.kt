@@ -10,11 +10,12 @@ data class Empregado(
     @Min(value = 500) val salario: Float,
     @Column("area_trabalho") val jobArea: JobArea,
     @Column("id_usuario") var idUser: Int,
-    @org.springframework.data.annotation.Transient
-    var user: User? = null
+
 ) {
     @Id
     @Column("id_funcionario")
     var id: Int = 0
 
+    @org.springframework.data.annotation.Transient
+    var user: User? = null
 }

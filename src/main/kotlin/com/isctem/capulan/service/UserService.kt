@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.map
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
+import javax.mail.PasswordAuthentication
 
 @Service
 class UserService(
@@ -39,7 +40,7 @@ class UserService(
      * @author Amade Ali
      * @param user Insercao dos dados do Trabalhador :: Cadastro
      */
-    suspend fun saveEmpregado(user: User, empregado: Empregado): ResponseEntity<Empregado> {
+    suspend fun saveEmpregado(user: User, empregado: Empregado): ResponseEntity<Any> {
         val userCliente = userRepository.save(entity = user)
         empregado.idUser = userCliente.id
         return empregadoRepository.save(empregado).run {
@@ -83,7 +84,7 @@ class UserService(
      * @param email email do cliente que sera instroduzido no sistema
      */
     private suspend fun validarEmail(email: String): Boolean {
-        return userRepository.existsByEmail(email)
+        return userRepository.existsByEmail(email) != null
     }
 
     /**
@@ -91,7 +92,8 @@ class UserService(
      * <p>Encontrar todos os clientes da Regiao de Mozambique</p>
      */
     suspend fun findAllClientes() = clienteRepository.findAll().map {
-        it.copy(user = userRepository.findById(it.idUser))
+        it.user = userRepository.findById(it.idUser)
+        it
     }
 
     /**
@@ -99,7 +101,8 @@ class UserService(
      * <p>Encontrar todos os funcionarios da Regiao de Mozambique</p>
      */
     suspend fun findAllFuncionarios() = empregadoRepository.findAll().map {
-        it.copy(user = userRepository.findById(it.idUser))
+        it.user = userRepository.findById(it.idUser)
+        it
     }
 
 }

@@ -12,8 +12,8 @@ data class Cliente(
     @Column("codigo_postal") var codigoPostal: String,
     var cidade: String,
     @Column("id_usuario") var idUser: Int,
+
+) {
     @org.springframework.data.annotation.Transient
     var user: User? = null
-) {
-
 }

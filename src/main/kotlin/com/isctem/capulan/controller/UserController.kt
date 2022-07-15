@@ -1,6 +1,6 @@
 package com.isctem.capulan.controller
 
-import com.isctem.capulan.model.actores.Empregado
+import com.isctem.capulan.exception.Validation
 import com.isctem.capulan.request.ClienteBody
 import com.isctem.capulan.request.EmpregadoBody
 import com.isctem.capulan.service.UserService
@@ -10,17 +10,37 @@ import javax.validation.Valid
 
 @RestController
 @RequestMapping("api/mz/user")
-class UserController(private val userService: UserService) {
+class UserController(
+    private val userService: UserService,
+    private val validator: Validation
+) {
 
     @PostMapping("/cliente")
     suspend fun saveCliente(@Valid @RequestBody clienteBody: ClienteBody): ResponseEntity<Any> {
+        val validateCliente = validator.validateCliente(clienteBody)
+        if (validateCliente != null) {
+            return validateCliente
+        }
         return userService.saveUser(cliente = clienteBody.cliente, user = clienteBody.user)
     }
 
     @PostMapping("/empregado")
-    suspend fun saveEmpregado(@Valid @RequestBody empregadoBody: EmpregadoBody): ResponseEntity<Empregado> {
+    suspend fun saveEmpregado(@Valid @RequestBody empregadoBody: EmpregadoBody): ResponseEntity<Any> {
+        val validateEmpregado = validator.validateEmpregado(empregadoBody)
+        if (validateEmpregado != null) {
+            return validateEmpregado
+        }
         return userService.saveEmpregado(user = empregadoBody.user, empregado = empregadoBody.empregado)
     }
+
+    @GetMapping("/login")
+    suspend fun login(
+        @RequestParam("codigo", required = true) id: Int,
+        @RequestParam("senha") senha: String
+    ): ResponseEntity<out Any> {
+        return userService.login(codigo = id, senha = senha)
+    }
+
 
     @GetMapping("/cliente")
     suspend fun findClientes() = userService.findAllClientes()
