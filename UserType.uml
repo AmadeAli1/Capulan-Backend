@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.isctem.capulan.model.actores.UserType</OriginalElement>
+  <nodes>
+    <node x="158.31903602587036" y="414.18728612997666">com.isctem.capulan.model.actores.JobArea</node>
+    <node x="-164.93870068397698" y="272.18728612997666">com.isctem.capulan.model.actores.Cliente</node>
+    <node x="158.31903602587036" y="272.18728612997666">com.isctem.capulan.model.actores.Empregado</node>
+    <node x="-44.938700683976975" y="51.115220634766814">com.isctem.capulan.model.actores.User</node>
+    <node x="-44.938700683976975" y="22.115220634766814">com.isctem.capulan.model.actores.UserType</node>
+    <node x="66.06129931602302" y="22.115220634766814">com.isctem.capulan.model.actores.Genre</node>
+  </nodes>
+  <notes />
+  <edges />
+  <settings layout="Hierarchic" zoom="1.0" showDependencies="false" x="81.0" y="225.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

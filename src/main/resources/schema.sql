@@ -1,0 +1,24 @@
+-- CREATE OR REPLACE TRIGGER insertTerminal
+--     BEFORE INSERT
+--     ON TERMINAL
+--     FOR EACH ROW
+-- BEGIN
+--     :new.id_terminal := TERMINAL_ID.nextval;
+-- end;
+--
+--
+-- CREATE OR REPLACE TRIGGER insertCategoria
+--     BEFORE INSERT
+--     ON Categoria
+--     For each row
+-- BEGIN
+--     :new.id_categoria := categoria_id.Nextval;
+-- END;
+--
+-- CREATE OR REPLACE TRIGGER insertUsuario
+--     BEFORE INSERT
+--     ON Usuario
+--     FOR EACH ROW
+-- BEGIN
+--     :new.id_usuario := USUARIO_ID.nextval;
+-- end;
