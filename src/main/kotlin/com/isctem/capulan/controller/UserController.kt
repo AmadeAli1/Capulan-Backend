@@ -1,24 +1,25 @@
 package com.isctem.capulan.controller
 
-import com.isctem.capulan.model.actores.Cliente
 import com.isctem.capulan.model.actores.Empregado
-import com.isctem.capulan.model.actores.User
+import com.isctem.capulan.request.ClienteBody
+import com.isctem.capulan.request.EmpregadoBody
 import com.isctem.capulan.service.UserService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import javax.validation.Valid
 
 @RestController
 @RequestMapping("api/mz/user")
 class UserController(private val userService: UserService) {
 
     @PostMapping("/cliente")
-    suspend fun saveCliente(@RequestBody user: User, @RequestBody cliente: Cliente): ResponseEntity<Any> {
-        return userService.saveUser(user, cliente)
+    suspend fun saveCliente(@Valid @RequestBody clienteBody: ClienteBody): ResponseEntity<Any> {
+        return userService.saveUser(cliente = clienteBody.cliente, user = clienteBody.user)
     }
 
     @PostMapping("/empregado")
-    suspend fun saveEmpregado(@RequestBody user: User, @RequestBody empregado: Empregado): ResponseEntity<Empregado> {
-        return userService.saveEmpregado(user, empregado)
+    suspend fun saveEmpregado(@Valid @RequestBody empregadoBody: EmpregadoBody): ResponseEntity<Empregado> {
+        return userService.saveEmpregado(user = empregadoBody.user, empregado = empregadoBody.empregado)
     }
 
     @GetMapping("/cliente")
@@ -26,5 +27,6 @@ class UserController(private val userService: UserService) {
 
     @GetMapping("/empregado")
     suspend fun findFuncionario() = userService.findAllFuncionarios()
+
 
 }
