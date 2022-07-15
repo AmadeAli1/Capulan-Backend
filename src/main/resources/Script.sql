@@ -12,22 +12,19 @@ CREATE TABLE Categoria
     tipo         VARCHAR(20) NOT NULL
 );
 CREATE SEQUENCE categoria_id start with 1;
-CREATE
-OR REPLACE TRIGGER insertTerminal
-           BEFORE INSERT
-           ON TERMINAL
-           FOR EACH ROW
+CREATE OR REPLACE TRIGGER insertTerminal
+    BEFORE INSERT
+    ON TERMINAL
+    FOR EACH ROW
 BEGIN
-    :new
-.id_terminal := TERMINAL_ID.nextval;
+    :new.id_terminal := TERMINAL_ID.nextval;
 end;
-OR REPLACE TRIGGER insertCategoria
-           BEFORE INSERT
-           ON Categoria
-           For each row
+CREATE OR REPLACE TRIGGER insertCategoria
+    BEFORE INSERT
+    ON Categoria
+    For each row
 BEGIN
-           :new
-.id_categoria := categoria_id.Nextval;
+    :new.id_categoria := categoria_id.Nextval;
 END;
 CREATE TABLE Usuario
 (
@@ -40,22 +37,20 @@ CREATE TABLE Usuario
     id_terminal                   NOT NULL REFERENCES Terminal (id_terminal) ON DELETE CASCADE
 );
 CREATE SEQUENCE usuario_id start with 1;
-CREATE
-OR REPLACE TRIGGER insertUsuario
-           BEFORE INSERT
-           ON Usuario
-           FOR EACH ROW
+CREATE OR REPLACE TRIGGER insertUsuario
+    BEFORE INSERT
+    ON Usuario
+    FOR EACH ROW
 BEGIN
-           :new
-.id_usuario := USUARIO_ID.nextval;
+    :new.id_usuario := USUARIO_ID.nextval;
 end;
 CREATE SEQUENCE cliente_id start with 1;
-CREATE
-OR REPLACE TRIGGER Cliente BEFORE INSERT ON Cliente
-           For each row
+CREATE OR REPLACE TRIGGER Cliente
+    BEFORE INSERT
+    ON Cliente
+    For each row
 BEGIN
-           :new
-.id_cliente:=cliente_id.Nextval;
+    :new.id_cliente := cliente_id.Nextval;
 END;
 CREATE TABLE Cliente
 (
@@ -65,12 +60,12 @@ CREATE TABLE Cliente
     cidade        VARCHAR(50)        NOT NULL,
     id_usuario                       NOT NULL REFERENCES Usuario (id_usuario) ON DELETE CASCADE
 );
-CREATE
-OR REPLACE TRIGGER Cliente BEFORE INSERT ON Cliente
-           For each row
+CREATE OR REPLACE TRIGGER Cliente
+    BEFORE INSERT
+    ON Cliente
+    For each row
 BEGIN
-           :new
-.id_cliente:=cliente_id.Nextval;
+    :new.id_cliente := cliente_id.Nextval;
 END;
 CREATE TABLE Funcionario
 (
@@ -79,26 +74,21 @@ CREATE TABLE Funcionario
     area_trabalho  VARCHAR(50) NOT NULL,
     id_usuario                 NOT NULL REFERENCES Usuario (id_usuario) ON DELETE CASCADE
 );
-
-CREATE
-OR REPLACE TRIGGER insertFuncionario
-           BEFORE INSERT
-           ON Funcionario
-           For each row
+CREATE SEQUENCE funcionario_id start with 1;
+CREATE OR REPLACE TRIGGER insertFuncionario
+    BEFORE INSERT
+    ON Funcionario
+    For each row
 BEGIN
-           :new
-.id_funcionario := funcionario_id.Nextval;
+    :new.id_funcionario := funcionario_id.Nextval;
 END;
-
 CREATE SEQUENCE stock_id_mz start with 1;
-CREATE
-OR REPLACE TRIGGER insertStockMZ
+CREATE OR REPLACE TRIGGER insertStockMZ
     BEFORE INSERT
     ON Stock_MZ
     FOR EACH ROW
 BEGIN
-    :new
-.id_stock := stock_id_mz.nextval;
+    :new.id_stock := stock_id_mz.nextval;
 end;
 
 CREATE TABLE Encomenda
@@ -113,14 +103,12 @@ CREATE TABLE Encomenda
     id_terminal  INTEGER     NOT NULL REFERENCES Terminal (id_terminal) ON DELETE CASCADE
 );
 CREATE SEQUENCE encomenda_id start with 1;
-CREATE
-OR REPLACE TRIGGER insertEncomendaSt
+CREATE OR REPLACE TRIGGER insertEncomendaSt
     BEFORE INSERT
     ON Encomenda
     FOR EACH ROW
 BEGIN
-    :new
-.id_encomenda := encomenda_id.nextval;
+    :new.id_encomenda := encomenda_id.nextval;
 end;
 
 
@@ -133,38 +121,11 @@ CREATE TABLE Historico_Vendas
     id_produto           NOT NULL REFERENCES PRODUTO_MZ_ST (id_produto) ON DELETE CASCADE
 );
 CREATE SEQUENCE historico_id start with 1;
-CREATE
-OR REPLACE TRIGGER insertHistorio_Venda
+
+CREATE OR REPLACE TRIGGER insertHistorio_Venda
     BEFORE INSERT
     ON Historico_Vendas
     FOR EACH ROW
 BEGIN
-    :new
-.id_historico := historico_id.nextval;
+    :new.id_historico := historico_id.nextval;
 end;
-
-
--- CREATE OR REPLACE TRIGGER insertTerminal
---     BEFORE INSERT
---     ON TERMINAL
---     FOR EACH ROW
--- BEGIN
---     :new.id_terminal := TERMINAL_ID.nextval;
--- end;
---
---
--- CREATE OR REPLACE TRIGGER insertCategoria
---     BEFORE INSERT
---     ON Categoria
---     For each row
--- BEGIN
---     :new.id_categoria := categoria_id.Nextval;
--- END;
---
--- CREATE OR REPLACE TRIGGER insertUsuario
---     BEFORE INSERT
---     ON Usuario
---     FOR EACH ROW
--- BEGIN
---     :new.id_usuario := USUARIO_ID.nextval;
--- end;
