@@ -4,7 +4,6 @@ import com.isctem.capulan.exception.Message
 import com.isctem.capulan.model.actores.Cliente
 import com.isctem.capulan.model.actores.Empregado
 import com.isctem.capulan.model.actores.User
-import com.isctem.capulan.model.actores.UserType.CLIENTE
 import com.isctem.capulan.repository.ClienteRepository
 import com.isctem.capulan.repository.EmpregadoRepository
 import com.isctem.capulan.repository.UserRepository
@@ -12,7 +11,6 @@ import kotlinx.coroutines.flow.map
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
-import javax.mail.PasswordAuthentication
 
 @Service
 class UserService(
@@ -56,24 +54,32 @@ class UserService(
      * @param senha senha do usuario para ter acesso
      */
     suspend fun login(codigo: Int, senha: String): ResponseEntity<out Any> {
-        val user = userRepository.findById(id = codigo)
-        return if (user == null) {
-            ResponseEntity(Message(field = "codigo", message = "User not found"), HttpStatus.BAD_REQUEST)
-        } else if (user.senha == senha) {
-            when (user.userType) {
-                CLIENTE -> {
-                    val cliente = clienteRepository.findByIdUser(idUser = user.id)
-                    cliente.user = user
-                    ResponseEntity(cliente, HttpStatus.OK)
-                }
-                else -> {
-                    val empregado = empregadoRepository.findByIdUser(idUser = user.id)
-                    empregado.user = user
-                    ResponseEntity(empregado, HttpStatus.OK)
-                }
-            }
+        val empregado = empregadoRepository.findByIdUser(idUser = codigo)
+        return if (empregado == null) {
+            ResponseEntity(Message(field = "codigo", message = "Funcionario not found"), HttpStatus.BAD_REQUEST)
+        } else if (empregado.senha == senha) {
+            ResponseEntity(empregado, HttpStatus.OK)
         } else {
             ResponseEntity(Message(field = "senha", message = "Senha invalida"), HttpStatus.BAD_REQUEST)
+        }
+    }
+
+    /**
+     * @author Amade Ali
+     * <p>Faz o login do cliente para visualizar produtos</p>
+     * @param codigo codigo unico do cliente
+     * @param senha senha do cliente para ter acesso
+     */
+    suspend fun loginUser(email: String, senha: String): ResponseEntity<out Any> {
+        val cliente = clienteRepository.findByEmail(email = email)
+        return if (cliente == null) {
+            ResponseEntity(Message(field = "email", message = "Email not found"), HttpStatus.BAD_REQUEST)
+        } else {
+            if (cliente.senha == senha) {
+                ResponseEntity(cliente, HttpStatus.OK)
+            } else {
+                ResponseEntity(Message(field = "senha", message = "Senha invalida"), HttpStatus.BAD_REQUEST)
+            }
         }
     }
 

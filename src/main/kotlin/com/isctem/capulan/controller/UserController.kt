@@ -33,12 +33,20 @@ class UserController(
         return userService.saveEmpregado(user = empregadoBody.user, empregado = empregadoBody.empregado)
     }
 
-    @GetMapping("/login")
+    @GetMapping("/login/work")
     suspend fun login(
         @RequestParam("codigo", required = true) id: Int,
         @RequestParam("senha") senha: String
     ): ResponseEntity<out Any> {
         return userService.login(codigo = id, senha = senha)
+    }
+
+    @GetMapping("/login/client")
+    suspend fun login(
+        @RequestParam("email", required = true) email: String,
+        @RequestParam("senha") senha: String
+    ): ResponseEntity<out Any> {
+        return userService.loginUser(email = email, senha = senha)
     }
 
 

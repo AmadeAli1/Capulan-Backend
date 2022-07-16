@@ -8,9 +8,8 @@ import javax.validation.constraints.Min
 @Table("Funcionario")
 data class Empregado(
     @Min(value = 500) val salario: Float,
-    @Column("area_trabalho") val jobArea: JobArea,
+    @Column("area_trabalho") val jobArea: UserType,
     @Column("id_usuario") var idUser: Int,
-
 ) {
     @Id
     @Column("id_funcionario")

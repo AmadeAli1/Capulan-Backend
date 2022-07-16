@@ -1,144 +1,268 @@
--- CREATE TABLE Terminal
--- (
---     id_terminal Integer PRIMARY KEY,
---     nome        VARCHAR(50) NOT NULL,
---     regiao      VARCHAR(50) NOT NULL
--- );
--- CREATE SEQUENCE terminal_id start with 1;
--- CREATE TABLE Categoria
--- (
---     id_categoria INTEGER PRIMARY KEY,
---     nome         VARCHAR(50) NOT NULL,
---     tipo         VARCHAR(20) NOT NULL
--- );
--- CREATE SEQUENCE categoria_id start with 1;
--- CREATE
--- OR REPLACE TRIGGER insertTerminal
---            BEFORE INSERT
---            ON TERMINAL
---            FOR EACH ROW
--- BEGIN
---     :new
--- .id_terminal := TERMINAL_ID.nextval;
--- end;
--- OR REPLACE TRIGGER insertCategoria
---            BEFORE INSERT
---            ON Categoria
---            For each row
--- BEGIN
---            :new
--- .id_categoria := categoria_id.Nextval;
--- END;
--- CREATE TABLE Usuario
--- (
---     id_usuario Integer PRIMARY KEY,
---     nome       VARCHAR(50)        NOT NULL,
---     bi         VARCHAR(13) UNIQUE NOT NULL,
---     sexo       VARCHAR(10),
---     tipo       VARCHAR(15)        NOT NULL,
---     senha      VARCHAR(50)        NOT NULL,
---     id_terminal                   NOT NULL REFERENCES Terminal (id_terminal) ON DELETE CASCADE
--- );
--- CREATE SEQUENCE usuario_id start with 1;
--- CREATE
--- OR REPLACE TRIGGER insertUsuario
---            BEFORE INSERT
---            ON Usuario
---            FOR EACH ROW
--- BEGIN
---            :new
--- .id_usuario := USUARIO_ID.nextval;
--- end;
--- CREATE SEQUENCE cliente_id start with 1;
--- CREATE
--- OR REPLACE TRIGGER Cliente BEFORE INSERT ON Cliente
---            For each row
--- BEGIN
---            :new
--- .id_cliente:=cliente_id.Nextval;
--- END;
--- CREATE TABLE Cliente
--- (
---     id_cliente    Integer PRIMARY KEY,
---     email         VARCHAR(50) UNIQUE NOT NULL,
---     codigo_postal VARCHAR(10)        NOT NULL,
---     cidade        VARCHAR(50)        NOT NULL,
---     id_usuario                       NOT NULL REFERENCES Usuario (id_usuario) ON DELETE CASCADE
--- );
--- CREATE
--- OR REPLACE TRIGGER Cliente BEFORE INSERT ON Cliente
---            For each row
--- BEGIN
---            :new
--- .id_cliente:=cliente_id.Nextval;
--- END;
--- CREATE TABLE Funcionario
--- (
---     id_funcionario Integer PRIMARY KEY,
---     salario        INTEGER     NOT NULL,
---     area_trabalho  VARCHAR(50) NOT NULL,
---     id_usuario                 NOT NULL REFERENCES Usuario (id_usuario) ON DELETE CASCADE
--- );
---
--- CREATE
--- OR REPLACE TRIGGER insertFuncionario
---            BEFORE INSERT
---            ON Funcionario
---            For each row
--- BEGIN
---            :new
--- .id_funcionario := funcionario_id.Nextval;
--- END;
---
--- CREATE SEQUENCE stock_id_mz start with 1;
--- CREATE
--- OR REPLACE TRIGGER insertStockMZ
---     BEFORE INSERT
---     ON Stock_MZ
---     FOR EACH ROW
--- BEGIN
---     :new
--- .id_stock := stock_id_mz.nextval;
--- end;
---
--- CREATE TABLE Encomenda
--- (
---     id_encomenda Integer PRIMARY KEY,
---     data_entrega DATE        NOT NULL,
---     quantidade   INTEGER     NOT NULL,
---     preco        INTEGER     NOT NULL,
---     estado       VARCHAR(50) NOT NULL,
---     id_usuario   INTEGER     NOT NULL REFERENCES Usuario (id_usuario) ON DELETE CASCADE,
---     id_produto   INTEGER     NOT NULL REFERENCES Produto_MZ_ST (id_produto) ON DELETE CASCADE,
---     id_terminal  INTEGER     NOT NULL REFERENCES Terminal (id_terminal) ON DELETE CASCADE
--- );
--- CREATE SEQUENCE encomenda_id start with 1;
--- CREATE
--- OR REPLACE TRIGGER insertEncomendaSt
---     BEFORE INSERT
---     ON Encomenda
---     FOR EACH ROW
--- BEGIN
---     :new
--- .id_encomenda := encomenda_id.nextval;
--- end;
---
---
--- CREATE TABLE Historico_Vendas
--- (
---     id_historico Integer PRIMARY KEY,
---     quantidade   INTEGER NOT NULL,
---     data_venda   DATE    NOT NULL,
---     preco        INTEGER NOT NULL,
---     id_produto           NOT NULL REFERENCES PRODUTO_MZ_ST (id_produto) ON DELETE CASCADE
--- );
--- CREATE SEQUENCE historico_id start with 1;
--- CREATE
--- OR REPLACE TRIGGER insertHistorio_Venda
---     BEFORE INSERT
---     ON Historico_Vendas
---     FOR EACH ROW
--- BEGIN
---     :new
--- .id_historico := historico_id.nextval;
--- end;
+create table TERMINAL
+(
+    ID_TERMINAL NUMBER       not null
+        primary key,
+    NOME        VARCHAR2(50) not null,
+    REGIAO      VARCHAR2(50) not null
+)
+/
+
+create trigger INSERTTERMINAL
+    before insert
+    on TERMINAL
+    for each row
+BEGIN
+    :new.id_terminal := TERMINAL_ID.nextval;
+end;
+/
+
+create table CATEGORIA
+(
+    ID_CATEGORIA NUMBER       not null
+        primary key,
+    NOME         VARCHAR2(50) not null,
+    TIPO         VARCHAR2(20) not null
+)
+/
+
+create trigger INSERTCATEGORIA
+    before insert
+    on CATEGORIA
+    for each row
+BEGIN
+    :new.id_categoria := categoria_id.Nextval;
+END;
+/
+
+create table USUARIO
+(
+    ID_USUARIO  NUMBER       not null
+        primary key,
+    NOME        VARCHAR2(50) not null,
+    BI          VARCHAR2(13) not null
+        unique,
+    SEXO        VARCHAR2(10),
+    TIPO        VARCHAR2(15) not null,
+    SENHA       VARCHAR2(50) not null,
+    ID_TERMINAL NUMBER       not null
+        references TERMINAL
+            on delete cascade
+)
+/
+
+create trigger INSERTUSUARIO
+    before insert
+    on USUARIO
+    for each row
+BEGIN
+    :new.id_usuario := USUARIO_ID.nextval;
+end;
+/
+
+create table CLIENTE
+(
+    ID_CLIENTE    NUMBER       not null
+        primary key,
+    EMAIL         VARCHAR2(50) not null
+        unique,
+    CODIGO_POSTAL VARCHAR2(10) not null,
+    CIDADE        VARCHAR2(50) not null,
+    ID_USUARIO    NUMBER       not null
+        references USUARIO
+            on delete cascade
+)
+/
+
+create trigger CLIENTE
+???
+on CLIENTE
+begin
+    -- missing source code
+end
+/
+
+create trigger CLIENTE
+    before insert
+    on CLIENTE
+    for each row
+BEGIN
+    :new.id_cliente:=cliente_id.Nextval;
+END;
+/
+
+create table FUNCIONARIO
+(
+    ID_FUNCIONARIO NUMBER       not null
+        primary key,
+    SALARIO        NUMBER       not null,
+    AREA_TRABALHO  VARCHAR2(50) not null,
+    ID_USUARIO     NUMBER       not null
+        references USUARIO
+            on delete cascade
+)
+/
+
+create trigger INSERTFUNCIONARIO
+    before insert
+    on FUNCIONARIO
+    for each row
+BEGIN
+    :new.id_funcionario := funcionario_id.Nextval;
+END;
+/
+
+create table FORNECEDOR
+(
+    ID_FORNECEDOR NUMBER       not null
+        primary key,
+    NOME_EMPRESA  VARCHAR2(50) not null
+        unique,
+    CONTACTO      VARCHAR2(50) not null,
+    EMAIL         VARCHAR2(50) not null
+        unique
+)
+/
+
+create trigger INSERTFORNECEDOR
+    before insert
+    on FORNECEDOR
+    for each row
+BEGIN
+    :new.id_fornecedor := fornecedor_id.nextval;
+end;
+/
+
+create table STOCK_MZ
+(
+    ID_STOCK      NUMBER not null
+        primary key,
+    QUANTIDADE    NUMBER not null,
+    DATA_CHEGADA  DATE   not null,
+    PRECO         NUMBER not null,
+    ID_TERMINAL   NUMBER not null
+        references TERMINAL
+            on delete cascade,
+    ID_FORNECEDOR NUMBER not null
+        references FORNECEDOR
+            on delete cascade
+)
+/
+
+create trigger INSERTSTOCKMZ
+    before insert
+    on STOCK_MZ
+    for each row
+BEGIN
+    :new.id_stock := stock_id_mz.nextval;
+end;
+/
+
+create table PRODUTO_MZ_ST
+(
+    ID_PRODUTO            NUMBER       not null
+        primary key,
+    NOME                  VARCHAR2(50) not null,
+    PRECO                 NUMBER       not null,
+    QUANTIDADE_DISPONIVEL NUMBER       not null,
+    ID_CATEGORIA          NUMBER       not null
+        references CATEGORIA
+            on delete cascade,
+    ID_STOCK              NUMBER       not null
+        references STOCK_MZ
+            on delete cascade
+)
+/
+
+create trigger INSERTPRODUTO_MZ_ST
+    before insert
+    on PRODUTO_MZ_ST
+    for each row
+BEGIN
+    :new.id_produto := produto_id_mz_st.nextval;
+end;
+/
+
+create table ENCOMENDA
+(
+    ID_ENCOMENDA NUMBER       not null
+        primary key,
+    DATA_ENTREGA DATE         not null,
+    QUANTIDADE   NUMBER       not null,
+    PRECO        NUMBER       not null,
+    ESTADO       VARCHAR2(50) not null,
+    ID_USUARIO   NUMBER       not null
+        references USUARIO
+            on delete cascade,
+    ID_PRODUTO   NUMBER       not null
+        references PRODUTO_MZ_ST
+            on delete cascade,
+    ID_TERMINAL  NUMBER       not null
+        references TERMINAL
+            on delete cascade
+)
+/
+
+create trigger INSERTENCOMENDAST
+    before insert
+    on ENCOMENDA
+    for each row
+BEGIN
+    :new.id_encomenda := encomenda_id.nextval;
+end;
+/
+
+create table HISTORICO_VENDAS
+(
+    ID_HISTORICO NUMBER not null
+        primary key,
+    QUANTIDADE   NUMBER not null,
+    DATA_VENDA   DATE   not null,
+    PRECO        NUMBER not null,
+    ID_PRODUTO   NUMBER not null
+        references PRODUTO_MZ_ST
+            on delete cascade
+)
+/
+
+create trigger INSERTHISTORIO_VENDA
+    before insert
+    on HISTORICO_VENDAS
+    for each row
+BEGIN
+    :new.id_historico := historico_id.nextval;
+end;
+/
+
+create table FUNCIONARIO_HISTORICO
+(
+    ID_HISTORICO   NUMBER not null
+        references HISTORICO_VENDAS
+            on delete cascade,
+    ID_FUNCIONARIO NUMBER not null
+        references FUNCIONARIO
+            on delete cascade
+)
+/
+
+create table CLIENTE_HISTORICO
+(
+    ID_HISTORICO NUMBER not null
+        references HISTORICO_VENDAS
+            on delete cascade,
+    ID_CLIENTE   NUMBER not null
+        references CLIENTE
+            on delete cascade
+)
+/
+
+create table FUNCIONARIO_ENCOMENDA
+(
+    ID_FUNCIONARIO NUMBER not null
+        references FUNCIONARIO
+            on delete cascade,
+    ID_ENCOMENDA   NUMBER not null
+        references ENCOMENDA
+            on delete cascade
+)
+/
+
