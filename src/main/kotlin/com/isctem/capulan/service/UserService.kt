@@ -7,7 +7,6 @@ import com.isctem.capulan.model.actores.User
 import com.isctem.capulan.repository.ClienteRepository
 import com.isctem.capulan.repository.EmpregadoRepository
 import com.isctem.capulan.repository.UserRepository
-import kotlinx.coroutines.flow.map
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
@@ -97,18 +96,12 @@ class UserService(
      * @author Amade Ali
      * <p>Encontrar todos os clientes da Regiao de Mozambique</p>
      */
-    suspend fun findAllClientes() = clienteRepository.findAll().map {
-        it.user = userRepository.findById(it.idUser)
-        it
-    }
+    suspend fun findAllClientes() = clienteRepository.getAll()
 
     /**
      * @author Amade Ali
      * <p>Encontrar todos os funcionarios da Regiao de Mozambique</p>
      */
-    suspend fun findAllFuncionarios() = empregadoRepository.findAll().map {
-        it.user = userRepository.findById(it.idUser)
-        it
-    }
+    suspend fun findAllFuncionarios() = clienteRepository.getAll()
 
 }
