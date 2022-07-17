@@ -37,6 +37,7 @@ class CapulanBackendApplication(
 }
 
 fun main(args: Array<String>) {
+
     runApplication<CapulanBackendApplication>(*args)
 }
 
