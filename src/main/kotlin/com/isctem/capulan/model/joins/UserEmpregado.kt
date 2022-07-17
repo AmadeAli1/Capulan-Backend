@@ -5,7 +5,7 @@ import com.isctem.capulan.model.actores.UserType
 import org.springframework.data.relational.core.mapping.Column
 import org.springframework.data.relational.core.mapping.Table
 
-@Table("UserEmpregado")
+@Table("UserFuncionario")
 data class UserEmpregado(
     @Column("nome") val nome: String,
     @Column("bi") val bi: String,

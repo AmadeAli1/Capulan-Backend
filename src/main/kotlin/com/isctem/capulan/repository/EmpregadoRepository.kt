@@ -11,10 +11,10 @@ import org.springframework.stereotype.Repository
 interface EmpregadoRepository : CoroutineCrudRepository<Empregado, Int> {
 
 
-    @Query("select * from USEREMPREGADO where ID_USUARIO=:$1")
+    @Query("select * from USERFUNCIONARIO where ID_USUARIO=:$1")
     suspend fun findByIdUser(idUser: Int): UserEmpregado?
 
-    @Query("select * from USEREMPREGADO")
+    @Query("select * from USERFUNCIONARIO")
     fun getAll(): Flow<UserEmpregado>
 
 }
