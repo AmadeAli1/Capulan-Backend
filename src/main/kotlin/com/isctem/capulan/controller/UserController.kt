@@ -21,7 +21,7 @@ class UserController(
         if (validateCliente != null) {
             return validateCliente
         }
-        return userService.saveUser(cliente = clienteBody.cliente, user = clienteBody.user)
+        return userService.saveCliente(cliente = clienteBody.cliente, user = clienteBody.user)
     }
 
     @PostMapping("/empregado")

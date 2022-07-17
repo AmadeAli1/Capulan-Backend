@@ -21,7 +21,7 @@ class UserService(
      * @author Amade Ali
      * @param user Insercao dos dados do Cliente :: Cadastro
      */
-    suspend fun saveUser(user: User, cliente: Cliente): ResponseEntity<Any> {
+    suspend fun saveCliente(user: User, cliente: Cliente): ResponseEntity<Any> {
         if (validarEmail(cliente.email)) {
             return ResponseEntity(Message(message = "Este email ja existe!", field = "email"), HttpStatus.BAD_REQUEST)
         }
@@ -34,8 +34,7 @@ class UserService(
         val userCliente = userRepository.save(entity = user)
         cliente.idUser = userCliente.id
         return clienteRepository.save(cliente).run {
-            this.user = userCliente
-            ResponseEntity(this, HttpStatus.CREATED)
+            ResponseEntity(clienteRepository.findByEmail(cliente.email), HttpStatus.CREATED)
         }
     }
 
