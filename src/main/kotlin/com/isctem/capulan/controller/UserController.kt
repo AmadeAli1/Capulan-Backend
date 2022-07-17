@@ -16,7 +16,7 @@ class UserController(
 ) {
 
     @PostMapping("/cliente")
-    suspend fun saveCliente(@Valid @RequestBody clienteBody: ClienteBody): ResponseEntity<Any> {
+    suspend fun saveCliente(@RequestBody clienteBody: ClienteBody): ResponseEntity<Any> {
         val validateCliente = validator.validateCliente(clienteBody)
         if (validateCliente != null) {
             return validateCliente

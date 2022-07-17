@@ -39,7 +39,8 @@ class Validation(
                 Message(field = it.propertyPath.toString(), message = it.message)
             }.toList()
 
-            val erros = listOf(clienteError, userError)
+            val erros = clienteError+userError
+            println(erros)
 
             return ResponseEntity(erros, HttpStatus.BAD_REQUEST)
         }
@@ -59,7 +60,7 @@ class Validation(
                 Message(field = it.propertyPath.toString(), message = it.message)
             }.toList()
 
-            val erros = listOf(empregadoError + userError)
+            val erros = empregadoError + userError
 
             return ResponseEntity(erros, HttpStatus.BAD_REQUEST)
         }

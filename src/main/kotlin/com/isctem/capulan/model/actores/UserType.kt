@@ -4,5 +4,6 @@ enum class UserType {
     CLIENTE,
     FUNCIONARIO,
     GERENTE,
-    ADMIN
+    ADMIN,
+    BALCONISTA
 }

@@ -23,7 +23,13 @@ class UserService(
      */
     suspend fun saveUser(user: User, cliente: Cliente): ResponseEntity<Any> {
         if (validarEmail(cliente.email)) {
-            return ResponseEntity("Este email ja existe!", HttpStatus.BAD_REQUEST)
+            return ResponseEntity(Message(message = "Este email ja existe!", field = "email"), HttpStatus.BAD_REQUEST)
+        }
+        if (validarBi(user.bi)) {
+            return ResponseEntity(
+                Message(message = "Esse codigo de bi ja existe!", field = "bi"),
+                HttpStatus.BAD_REQUEST
+            )
         }
         val userCliente = userRepository.save(entity = user)
         cliente.idUser = userCliente.id
@@ -31,6 +37,10 @@ class UserService(
             this.user = userCliente
             ResponseEntity(this, HttpStatus.CREATED)
         }
+    }
+
+    suspend fun validarBi(bi: String): Boolean {
+        return userRepository.existsByBi(bi) != null
     }
 
     /**
@@ -102,6 +112,6 @@ class UserService(
      * @author Amade Ali
      * <p>Encontrar todos os funcionarios da Regiao de Mozambique</p>
      */
-    suspend fun findAllFuncionarios() = clienteRepository.getAll()
+    suspend fun findAllFuncionarios() = empregadoRepository.getAll()
 
 }

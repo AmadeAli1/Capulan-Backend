@@ -13,4 +13,9 @@ interface UserRepository : CoroutineCrudRepository<User, Int> {
     @Query("select * from CLIENTE where EMAIL=:$1")
     suspend fun existsByEmail(email: String): Cliente?
 
+    @Suppress("SpringDataRepositoryMethodReturnTypeInspection")
+    @Query("select * from USUARIO where bi=:$1")
+    suspend fun existsByBi(bi: String): User?
+
+
 }
