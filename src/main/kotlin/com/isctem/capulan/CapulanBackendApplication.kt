@@ -27,10 +27,9 @@ class CapulanBackendApplication(
                 senha = "pranas123",
                 userType = UserType.FUNCIONARIO,
                 sexo = Genre.MASCULINO,
-                idTerminal = 1
+                idTerminal = 22
             )
             userService.saveEmpregado(user, funcionario)
-
         }
     }
 
