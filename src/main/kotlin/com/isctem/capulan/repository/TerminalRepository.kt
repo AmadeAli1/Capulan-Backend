@@ -8,6 +8,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface TerminalRepository : CoroutineCrudRepository<Terminal, Int> {
-    @Query("select * from Terminal@laptop1")
-    fun find(): Flow<Terminal>
+
 }
