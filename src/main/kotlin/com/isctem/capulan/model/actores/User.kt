@@ -1,5 +1,6 @@
 package com.isctem.capulan.model.actores
 
+import com.isctem.capulan.enums.UserType
 import org.hibernate.validator.constraints.Length
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Column

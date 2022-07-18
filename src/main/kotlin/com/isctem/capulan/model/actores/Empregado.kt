@@ -1,5 +1,6 @@
 package com.isctem.capulan.model.actores
 
+import com.isctem.capulan.enums.JobArea
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Column
 import org.springframework.data.relational.core.mapping.Table
@@ -8,7 +9,7 @@ import javax.validation.constraints.Min
 @Table("Funcionario")
 data class Empregado(
     @Min(value = 500) val salario: Float,
-    @Column("area_trabalho") val jobArea: UserType,
+    @Column("area_trabalho") val jobArea: JobArea,
     @Column("id_usuario") var idUser: Int,
 ) {
     @Id

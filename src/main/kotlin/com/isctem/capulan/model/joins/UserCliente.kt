@@ -1,7 +1,7 @@
 package com.isctem.capulan.model.joins
 
 import com.isctem.capulan.model.actores.Genre
-import com.isctem.capulan.model.actores.UserType
+import com.isctem.capulan.enums.UserType
 import org.springframework.data.relational.core.mapping.Column
 import org.springframework.data.relational.core.mapping.Table
 

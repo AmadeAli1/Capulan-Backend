@@ -11,6 +11,7 @@ class Fornecedor(
     @Column("contacto") val contacto:String,
     @field:Email var email: String,
 ) {
-    @Id @Column("id_fornecedor") val id:Int=0
-
+    @Id
+    @Column("id_fornecedor")
+    val id:Int=0
 }

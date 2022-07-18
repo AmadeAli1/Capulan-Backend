@@ -13,6 +13,8 @@ class Stock(
     @Column("id_terminal") var id_terminal:Int,
     @Column("id_fornecedor") var id_fornecedor:Int,
 ) {
-    @Id @Column("id_stock") val id: Int=0
+    @Id
+    @Column("id_stock")
+    val id: Int=0
 
 }
